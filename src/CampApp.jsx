@@ -26,29 +26,73 @@ function CampApp() {
     )
   }
 
+  const patrolCount = new Set(
+    participants.map((participant) => participant.patrol)
+  ).size
+
   return (
-    <>
-      <h1>Scout Camp Management System</h1>
+    <main className="app-shell">
+      <header className="app-header">
+        <div>
+          <p className="eyebrow">Camp operations</p>
+          <h1>Scout Camp Management System</h1>
+          <p className="header-copy">
+            Register participants, track patrols, and keep the camp list tidy.
+          </p>
+        </div>
+      </header>
 
-      <p>Total participants: {participants.length}</p>
+      <section className="stats-grid">
+        <article className="stat-card">
+          <span>Total participants</span>
+          <strong>{participants.length}</strong>
+        </article>
 
-      <Participation addParticipant={addParticipant} />
+        <article className="stat-card">
+          <span>Active patrols</span>
+          <strong>{patrolCount}</strong>
+        </article>
+      </section>
 
-      <ul>
-        {participants.map((participant) => (
-          <li key={participant.id}>
-            {participant.name} - Age {participant.age} - {participant.patrol}
+      <section className="content-grid">
+        <Participation addParticipant={addParticipant} />
 
-            <button
-              type="button"
-              onClick={() => deleteParticipant(participant.id)}
-            >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
-    </>
+        <section className="list-panel">
+          <div className="panel-heading">
+            <div>
+              <p className="eyebrow">Roster</p>
+              <h2>Participants</h2>
+            </div>
+            <span className="count-pill">{participants.length}</span>
+          </div>
+
+          {participants.length === 0 ? (
+            <p className="empty-state">No participants registered yet.</p>
+          ) : (
+            <ul className="participant-list">
+              {participants.map((participant) => (
+                <li className="participant-item" key={participant.id}>
+                  <div>
+                    <h3>{participant.name}</h3>
+                    <p>
+                      Age {participant.age} - {participant.patrol} Patrol
+                    </p>
+                  </div>
+
+                  <button
+                    type="button"
+                    className="delete-button"
+                    onClick={() => deleteParticipant(participant.id)}
+                  >
+                    Delete
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      </section>
+    </main>
   )
 }
 

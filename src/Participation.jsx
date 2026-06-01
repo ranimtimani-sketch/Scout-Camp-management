@@ -27,27 +27,44 @@ function Participation({ addParticipant }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Participant name"
-        value={name}
-        onChange={(event) => setName(event.target.value)}
-      />
+    <form className="registration-form" onSubmit={handleSubmit}>
+      <div className="panel-heading">
+        <div>
+          <p className="eyebrow">Registration</p>
+          <h2>Add participant</h2>
+        </div>
+      </div>
 
-      <input
-        type="number"
-        placeholder="Age"
-        value={age}
-        onChange={(event) => setAge(event.target.value)}
-      />
+      <label>
+        <span>Participant name</span>
+        <input
+          type="text"
+          placeholder="Example: Ranim Timani"
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+        />
+      </label>
 
-      <input
-        type="text"
-        placeholder="Patrol"
-        value={patrol}
-        onChange={(event) => setPatrol(event.target.value)}
-      />
+      <label>
+        <span>Age</span>
+        <input
+          type="number"
+          min="1"
+          placeholder="Example: 14"
+          value={age}
+          onChange={(event) => setAge(event.target.value)}
+        />
+      </label>
+
+      <label>
+        <span>Patrol</span>
+        <input
+          type="text"
+          placeholder="Example: Eagles"
+          value={patrol}
+          onChange={(event) => setPatrol(event.target.value)}
+        />
+      </label>
 
       <button type="submit">Add participant</button>
     </form>
