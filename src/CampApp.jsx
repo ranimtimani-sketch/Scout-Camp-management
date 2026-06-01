@@ -1,8 +1,20 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Participation from './Participation.jsx'
 
 function CampApp() {
-  const [participants, setParticipants] = useState([])
+  const [participants, setParticipants] = useState(() => {
+    const savedParticipants = localStorage.getItem('participants')
+
+    if (savedParticipants) {
+      return JSON.parse(savedParticipants)
+    }
+
+    return []
+  })
+
+  useEffect(() => {
+    localStorage.setItem('participants', JSON.stringify(participants))
+  }, [participants])
 
   function addParticipant(newParticipant) {
     setParticipants([...participants, newParticipant])
