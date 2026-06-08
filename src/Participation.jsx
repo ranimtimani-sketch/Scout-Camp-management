@@ -19,6 +19,7 @@ function Participation({ addParticipant }) {
       name: name,
       age: age,
       patrol: patrol,
+      paid: false,
       needsAttention: needsAttention,
       attentionNotes: needsAttention ? attentionNotes : '',
     }
