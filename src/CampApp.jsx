@@ -29,6 +29,9 @@ function CampApp() {
   const patrolCount = new Set(
     participants.map((participant) => participant.patrol)
   ).size
+  const attentionCount = participants.filter(
+    (participant) => participant.needsAttention
+  ).length
 
   return (
     <main className="app-shell">
@@ -52,6 +55,11 @@ function CampApp() {
           <span>Active patrols</span>
           <strong>{patrolCount}</strong>
         </article>
+
+        <article className="stat-card attention-stat">
+          <span>Attention notes</span>
+          <strong>{attentionCount}</strong>
+        </article>
       </section>
 
       <section className="content-grid">
@@ -73,10 +81,21 @@ function CampApp() {
               {participants.map((participant) => (
                 <li className="participant-item" key={participant.id}>
                   <div>
-                    <h3>{participant.name}</h3>
+                    <div className="participant-name-row">
+                      <h3>{participant.name}</h3>
+                      {participant.needsAttention && (
+                        <span className="warning-badge">! Attention</span>
+                      )}
+                    </div>
                     <p>
                       Age {participant.age} - {participant.patrol} Patrol
                     </p>
+                    {participant.needsAttention && (
+                      <p className="attention-note">
+                        {participant.attentionNotes ||
+                          'Check medicine, food, or allergy details.'}
+                      </p>
+                    )}
                   </div>
 
                   <button

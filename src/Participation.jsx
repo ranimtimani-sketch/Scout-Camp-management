@@ -4,6 +4,8 @@ function Participation({ addParticipant }) {
   const [name, setName] = useState('')
   const [age, setAge] = useState('')
   const [patrol, setPatrol] = useState('')
+  const [needsAttention, setNeedsAttention] = useState(false)
+  const [attentionNotes, setAttentionNotes] = useState('')
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -17,6 +19,8 @@ function Participation({ addParticipant }) {
       name: name,
       age: age,
       patrol: patrol,
+      needsAttention: needsAttention,
+      attentionNotes: needsAttention ? attentionNotes : '',
     }
 
     addParticipant(newParticipant)
@@ -24,6 +28,8 @@ function Participation({ addParticipant }) {
     setName('')
     setAge('')
     setPatrol('')
+    setNeedsAttention(false)
+    setAttentionNotes('')
   }
 
   return (
@@ -65,6 +71,26 @@ function Participation({ addParticipant }) {
           onChange={(event) => setPatrol(event.target.value)}
         />
       </label>
+
+      <label className="attention-toggle">
+        <input
+          type="checkbox"
+          checked={needsAttention}
+          onChange={(event) => setNeedsAttention(event.target.checked)}
+        />
+        <span>Needs attention for medicine, food, or allergies</span>
+      </label>
+
+      {needsAttention && (
+        <label>
+          <span>Attention notes</span>
+          <textarea
+            placeholder="Example: Peanut allergy, medicine at lunch, no dairy"
+            value={attentionNotes}
+            onChange={(event) => setAttentionNotes(event.target.value)}
+          />
+        </label>
+      )}
 
       <button type="submit">Add participant</button>
     </form>

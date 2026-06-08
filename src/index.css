@@ -19,7 +19,8 @@ body {
 }
 
 button,
-input {
+input,
+textarea {
   font: inherit;
 }
 
@@ -97,7 +98,7 @@ h3 {
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
   margin-top: 18px;
 }
@@ -129,6 +130,10 @@ h3 {
   color: #1f6f52;
   font-size: 36px;
   line-height: 1;
+}
+
+.attention-stat strong {
+  color: #b42318;
 }
 
 .content-grid {
@@ -167,7 +172,8 @@ label span {
   font-weight: 800;
 }
 
-input {
+input,
+textarea {
   width: 100%;
   border: 1px solid #c9d7d0;
   border-radius: 8px;
@@ -177,10 +183,39 @@ input {
   outline: none;
 }
 
-input:focus {
+textarea {
+  min-height: 92px;
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus {
   border-color: #1f6f52;
   background: #ffffff;
   box-shadow: 0 0 0 3px rgba(31, 111, 82, 0.14);
+}
+
+.attention-toggle {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border: 1px solid #f1c7bf;
+  border-radius: 8px;
+  background: #fff8f6;
+  color: #743126;
+  padding: 12px;
+}
+
+.attention-toggle input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: #b42318;
+}
+
+.attention-toggle span {
+  color: #743126;
+  line-height: 1.35;
 }
 
 .registration-form button,
@@ -248,6 +283,37 @@ input:focus {
 .participant-item p {
   margin-top: 4px;
   color: #66746f;
+}
+
+.participant-name-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.warning-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  border-radius: 999px;
+  background: #fff1ee;
+  color: #b42318;
+  font-size: 12px;
+  font-weight: 900;
+  padding: 4px 9px;
+  text-transform: uppercase;
+}
+
+.participant-item .attention-note {
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 9px;
+  border-left: 3px solid #b42318;
+  border-radius: 4px;
+  background: #fff8f6;
+  color: #743126;
+  padding: 8px 10px;
 }
 
 .delete-button {
