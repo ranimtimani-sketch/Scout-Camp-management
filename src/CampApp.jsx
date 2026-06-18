@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
+import DashboardPage from './DashboardPage.jsx'
 import Participation from './Participation.jsx'
 import PaymentsPage from './PaymentsPage.jsx'
 
 function CampApp() {
-  const [activePage, setActivePage] = useState('participants')
+  const [activePage, setActivePage] = useState('dashboard')
+  const [searchTerm, setSearchTerm] = useState('')
+  const [patrolFilter, setPatrolFilter] = useState('all')
   const [participants, setParticipants] = useState(() => {
     const savedParticipants = localStorage.getItem('participants')
 
@@ -41,6 +44,18 @@ function CampApp() {
   const patrolCount = new Set(
     participants.map((participant) => participant.patrol)
   ).size
+  const patrolOptions = [
+    ...new Set(participants.map((participant) => participant.patrol)),
+  ]
+  const filteredParticipants = participants.filter((participant) => {
+    const matchesSearch = participant.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
+    const matchesPatrol =
+      patrolFilter === 'all' || participant.patrol === patrolFilter
+
+    return matchesSearch && matchesPatrol
+  })
   const attentionCount = participants.filter(
     (participant) => participant.needsAttention
   ).length
@@ -60,6 +75,13 @@ function CampApp() {
       </header>
 
       <nav className="page-tabs" aria-label="Camp sections">
+        <button
+          type="button"
+          className={activePage === 'dashboard' ? 'active-tab' : ''}
+          onClick={() => setActivePage('dashboard')}
+        >
+          Dashboard
+        </button>
         <button
           type="button"
           className={activePage === 'participants' ? 'active-tab' : ''}
@@ -103,7 +125,11 @@ function CampApp() {
         </article>
       </section>
 
-      {activePage === 'participants' ? (
+      {activePage === 'dashboard' && (
+        <DashboardPage participants={participants} />
+      )}
+
+      {activePage === 'participants' && (
         <section className="content-grid">
           <Participation addParticipant={addParticipant} />
 
@@ -113,14 +139,39 @@ function CampApp() {
                 <p className="eyebrow">Roster</p>
                 <h2>Participants</h2>
               </div>
-              <span className="count-pill">{participants.length}</span>
+              <span className="count-pill">
+                {filteredParticipants.length}/{participants.length}
+              </span>
+            </div>
+
+            <div className="list-controls">
+              <input
+                type="search"
+                placeholder="Search participant by name"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+              />
+
+              <select
+                value={patrolFilter}
+                onChange={(event) => setPatrolFilter(event.target.value)}
+              >
+                <option value="all">All patrols</option>
+                {patrolOptions.map((patrol) => (
+                  <option key={patrol} value={patrol}>
+                    {patrol}
+                  </option>
+                ))}
+              </select>
             </div>
 
             {participants.length === 0 ? (
               <p className="empty-state">No participants registered yet.</p>
+            ) : filteredParticipants.length === 0 ? (
+              <p className="empty-state">No participants match your search.</p>
             ) : (
               <ul className="participant-list">
-                {participants.map((participant) => (
+                {filteredParticipants.map((participant) => (
                   <li className="participant-item" key={participant.id}>
                     <div>
                       <div className="participant-name-row">
@@ -156,7 +207,9 @@ function CampApp() {
             )}
           </section>
         </section>
-      ) : (
+      )}
+
+      {activePage === 'payments' && (
         <PaymentsPage participants={participants} togglePaid={togglePaid} />
       )}
     </main>

@@ -20,6 +20,7 @@ body {
 
 button,
 input,
+select,
 textarea {
   font: inherit;
 }
@@ -128,6 +129,7 @@ h3 {
 }
 
 .stat-card,
+.dashboard-panel,
 .registration-form,
 .list-panel,
 .payments-panel {
@@ -207,6 +209,7 @@ label span {
 }
 
 input,
+select,
 textarea {
   width: 100%;
   border: 1px solid #c9d7d0;
@@ -223,6 +226,7 @@ textarea {
 }
 
 input:focus,
+select:focus,
 textarea:focus {
   border-color: #1f6f52;
   background: #ffffff;
@@ -301,6 +305,13 @@ textarea:focus {
   padding: 0;
   margin: 18px 0 0;
   list-style: none;
+}
+
+.list-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 180px;
+  gap: 10px;
+  margin-top: 18px;
 }
 
 .participant-item {
@@ -387,6 +398,85 @@ textarea:focus {
   margin-top: 18px;
 }
 
+.dashboard-page {
+  display: grid;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.dashboard-panel {
+  padding: 22px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.dashboard-metric {
+  border: 1px solid #e3ece7;
+  border-radius: 8px;
+  background: #fbfdfc;
+  padding: 16px;
+}
+
+.dashboard-metric span {
+  display: block;
+  color: #66746f;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.dashboard-metric strong {
+  display: block;
+  margin-top: 8px;
+  color: #1f6f52;
+  font-size: 32px;
+  line-height: 1;
+}
+
+.warning-metric strong {
+  color: #b42318;
+}
+
+.dashboard-two-column {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 18px;
+}
+
+.summary-list {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  margin: 18px 0 0;
+  list-style: none;
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border: 1px solid #e3ece7;
+  border-radius: 8px;
+  background: #fbfdfc;
+  padding: 14px;
+}
+
+.summary-item p {
+  margin-top: 4px;
+  color: #66746f;
+}
+
+.attention-summary {
+  border-color: #f1c7bf;
+  background: #fff8f6;
+}
+
 .payment-list {
   display: grid;
   gap: 12px;
@@ -469,7 +559,8 @@ textarea:focus {
   }
 
   .participant-item,
-  .payment-item {
+  .payment-item,
+  .summary-item {
     align-items: stretch;
     flex-direction: column;
   }
@@ -481,10 +572,15 @@ textarea:focus {
 
   .page-tabs {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .payment-toggle {
     justify-content: center;
+  }
+
+  .list-controls,
+  .dashboard-two-column {
+    grid-template-columns: 1fr;
   }
 }
